@@ -19,7 +19,7 @@ fn main() {
 
     loop {
         thread::sleep(Duration::from_millis(5000));
-        println!("{:?}", metrics.snapshot());
+        println!("{}", metrics);
     }
 }
 
@@ -38,7 +38,7 @@ fn request_worker(metrics: Metrics) {
         let mut rng = rand::rng();
         thread::sleep(Duration::from_millis(rng.random_range(50..=800)));
 
-        let page = rng.random_range(1..256);
+        let page = rng.random_range(1..10);
         if let Err(e) = metrics.inc(format!("req.page.{}", page)) {
             eprintln!("Error incrementing metrics: {}", e);
         }
