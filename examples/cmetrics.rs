@@ -1,13 +1,13 @@
 use std::{thread, time::Duration};
 
-use concurrency::Metrics;
+use concurrency::CmapMetrics;
 use rand::Rng;
 
 const N: usize = 2;
 const M: usize = 4;
 
 fn main() {
-    let metrics = Metrics::new();
+    let metrics = CmapMetrics::new();
 
     // start N workers and M requesters
     for i in 0..N {
@@ -23,7 +23,7 @@ fn main() {
     }
 }
 
-fn task_worker(idx: usize, metrics: Metrics) {
+fn task_worker(idx: usize, metrics: CmapMetrics) {
     thread::spawn(move || loop {
         let mut rng = rand::rng();
         thread::sleep(Duration::from_millis(rng.random_range(100..=5000)));
@@ -33,7 +33,7 @@ fn task_worker(idx: usize, metrics: Metrics) {
     });
 }
 
-fn request_worker(metrics: Metrics) {
+fn request_worker(metrics: CmapMetrics) {
     thread::spawn(move || loop {
         let mut rng = rand::rng();
         thread::sleep(Duration::from_millis(rng.random_range(50..=800)));
